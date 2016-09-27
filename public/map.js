@@ -2,17 +2,10 @@ var Map = function( container, coords, zoom ) {
   this.googleMap = new google.maps.Map( container, {
     center: coords,
     zoom: zoom
-  } );
+  });
+}
 
-  this.addMarker = function( coords ) {
-    var marker = new google.maps.Marker({
-      position: coords,
-      map: this.googleMap,
-      label: "A"
-    })
-  }
-
-  this.addClickEvent = function() {
+Map.prototype.addClickEvent = function() {
     google.maps.event.addListener( this.googleMap, 'click', function( event ) {
       console.log( event );
 
@@ -21,8 +14,7 @@ var Map = function( container, coords, zoom ) {
         lng: event.latLng.lng()
       }
 
-      this.addMarker( position );
+      var marker = new Marker( this.googleMap, position );
+      marker.addListener();
     }.bind(this))
   }
-
-}
